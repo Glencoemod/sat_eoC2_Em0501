@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Countdown</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #ebe8e8;
+        }
+
+        #countdown {
+            font-size: 50px;
+            margin-top: 100px;
+        }
+
+        /* Container für das Bild + GIFs */
+        #imageContainer {
+            position: relative;
+            display: inline-block;
+            margin-top: 50px;
+        }
+
+        #resultImage {
+            display: none;
+            max-width: 800px;
+            border-radius: 10px;
+        }
+
+        #resultGifTopRight,
+        #resultGifBottomLeft {
+            display: none;
+            position: absolute;
+            width: 320px; /* doppelte Größe */
+        }
+
+        /* Oben rechts, halb überlappend, 50px Richtung Mitte */
+        #resultGifTopRight {
+            top: -30px;      /* halb überlappend nach oben */
+            right: -50px;    /* halb überlappend + 50px Richtung Mitte */
+        }
+
+        /* Unten links, halb überlappend, 50px Richtung Mitte */
+        #resultGifBottomLeft {
+            bottom: -30px;   /* halb überlappend nach unten */
+            left: -50px;     /* halb überlappend + 50px Richtung Mitte */
+        }
+    </style>
+</head>
+<body>
+    <div id="countdown"></div>
+
+    <div id="imageContainer">
+        <img id="resultImage" src="GR.png" alt="Abgelaufen-Bild">
+        <img id="resultGifTopRight" src="Cel.gif" alt="Animation oben rechts">
+        <img id="resultGifBottomLeft" src="Cel.gif" alt="Animation unten links">
+    </div>
+
+    <script>
+        // Countdown-Zielzeit
+        const countDownDate = new Date("August 16, 2025 18:10:00").getTime();
+
+        const timer = setInterval(function() {
+            const now = new Date().getTime();
+            let diff = countDownDate - now;
+
+            // Berechnungen für Tage, Stunden, Minuten, Sekunden
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            // Countdown aktualisieren
+            if (diff > 0) {
+                document.getElementById("countdown").textContent =
+                    days + "T " + hours + "H " + minutes + "M " + seconds + "S";
+            } else {
+                // Countdown abgelaufen
+                document.getElementById("countdown").style.display = "none";   		// Countdown ausblenden
+                document.getElementById("resultImage").style.display = "block";         // Bild
+                document.getElementById("resultGifTopRight").style.display = "block";   // erstes GIF
+		document.getElementById("resultGifBottomLeft").style.display = "block";	// zweites GIF
+                document.body.style.background = "#FFFFFF";                             // Hintergrund ändern
+
+                clearInterval(timer);
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
