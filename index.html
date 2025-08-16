@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Countdown</title>
+<style>
+    body {
+        font-family: sans-serif;
+        text-align: center;
+        margin-top: 50px;
+        background: #f0f0f0; /* ursprüngliche Hintergrundfarbe */
+        transition: background 0.5s; /* sanfter Übergang */
+    }
+    #countdown {
+        font-size: 5em;
+        font-weight: bold;
+        color: #333;
+    }
+    #resultImage {
+        display: none;
+        margin-top: 20px;
+        max-width: 400px;
+        border-radius: 10px;
+    }
+</style>
+</head>
+<body>
+
+<div id="countdown">–</div>
+<img id="resultImage" src="Test.png" alt="Abgelaufen-Bild">
+
+<script>
+// Zielzeitpunkt
+const targetDate = new Date("2025-08-16T13:30:00");
+
+// Countdown-Funktion
+function updateCountdown() {
+    const now = new Date();
+    const diff = targetDate - now;
+
+    if (diff <= 0) {
+        // Am Ende "0T 0H 0M 0S" anzeigen
+        document.getElementById("countdown").textContent = "0T 0H 0M 0S";
+        document.getElementById("resultImage").style.display = "block";
+        document.body.style.background = "#b5b674"; // neue Hintergrundfarbe
+        clearInterval(timer);
+        return;
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    document.getElementById("countdown").textContent =
+        `${days}T ${hours}H ${minutes}M ${seconds}S`;
+}
+
+const timer = setInterval(updateCountdown, 1000);
+updateCountdown();
+</script>
+
+</body>
+</html>
